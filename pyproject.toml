@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "atlas"
+version = "0.1.0"
+description = ""
+authors = ["seankoval <seanmkoval@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.88.0"
+pydantic = "^1.10.2"
+asyncio = "^3.4.3"
+numpy = "^1.24.0"
+scikit-learn = "^1.2.0"
+pandas = "^1.5.2"
+redis = "^4.4.0"
+uvicorn = "^0.20.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+aioredis = "^2.0.1"
+requests = "^2.28.1"
+psycopg2 = "^2.9.5"
+databases = "^0.7.0"
+python-dotenv = "^0.21.0"
+fastapi-sqlalchemy = "^0.2.1"
+sqlalchemy = "^1.4.45"
+aiohttp = "^3.8.3"
+pypeln = "^0.4.9"
+asyncpg = "^0.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
