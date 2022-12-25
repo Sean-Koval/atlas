@@ -5,8 +5,6 @@
 ###     3\ user can select specific projects and save to a folder
 ###     4\ user can retreive portfolio of saved projects
 ### -----------------------
-
-
 import asyncio
 import json
 import os
