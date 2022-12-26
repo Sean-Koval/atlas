@@ -30,9 +30,8 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models.vc_models import *
-
 from config import settings
+from models.vc_models import *
 
 # start db
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
@@ -57,6 +56,7 @@ async def add_process_time_header(request, call_next):
     response.headers["X-Process-Time"] = str(f"{process_time:0.4f} sec")
     return response
 
+
 # app.add_middleware(DBSessionMiddleware, db_url=os.getenv["DATABASE_URL"])
 
 
@@ -64,7 +64,6 @@ async def add_process_time_header(request, call_next):
 # create the connection pool for redis
 # pool = aioredis.ConnectionPool.from_url("redis://localhost", max_connections=10)
 # redis = aioredis.Redis(connection_pool=pool)
-
 
 
 ### ---- STORE COMPANY DATA IN POSTGRES ----- (FOR A USER)

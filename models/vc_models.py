@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import Any, List
+
+from pydantic import BaseModel
+
 
 class KeywordInput(BaseModel):
     keywords: list[str]
