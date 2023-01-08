@@ -22,7 +22,7 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models.vc_models import CompanyInput
+from mlapi.src.models.vc_models import CompanyInput
 
 router = APIRouter()
 ### -------------------------------------------------------

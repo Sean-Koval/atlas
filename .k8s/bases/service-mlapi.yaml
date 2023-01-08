@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlapi
+  namespace: sean-koval
+  labels:
+    app: mlapi
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      #protocol: TCP
+  selector:
+    app: mlapi

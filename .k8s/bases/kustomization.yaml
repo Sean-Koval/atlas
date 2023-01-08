@@ -1,0 +1,9 @@
+---
+namespace: sean-koval
+resources:
+  - config-map.yaml
+  - persistent-volume.yaml
+  - deployment-mlapi.yaml
+  - deployment-redis.yaml
+  - service-mlapi.yaml
+  - service-redis.yaml

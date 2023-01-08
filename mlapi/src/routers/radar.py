@@ -8,7 +8,7 @@ from typing import Any, List
 import aiohttp
 import aioredis
 import asyncpg
-# Set up PostgreSQL connection
+# Set up PostgreSQL connectio
 import psycopg2
 import pypeln
 import requests
@@ -22,7 +22,7 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models.vc_models import KeywordInput, Project, SearchResult
+from mlapi.src.models.vc_models import KeywordInput, Project, SearchResult
 
 router = APIRouter()
 

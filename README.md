@@ -149,4 +149,7 @@ A endpoint for identifying trends or patterns in the venture capital industry. T
 
 
 
+### DATA COLLECTION - Scraping startups
+
+
 

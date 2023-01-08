@@ -26,8 +26,8 @@ from sqlalchemy.orm import sessionmaker
 from fastapi import Request, Response, APIRouter, HTTPException
 
 from config import settings
-from models.vc_models import *
-from routers import profile, radar, symbio
+from mlapi.src.models.vc_models import *
+from mlapi.src.routers import profile, radar, symbio
 
 
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
@@ -111,14 +111,14 @@ app.include_router(symbio.router, prefix="/symbio", tags=["symbio"])
 
 
 # main server fn
-async def main_pool():
-    """Main loop that spins up services related to the application"""
-    ### ------------------------------
-    # configure and run uvicorn server
-    config = uvicorn.Config("main:app", port=8000, log_level="info")
-    server = uvicorn.Server(config)
-    await server.serve()
+#async def main_pool():
+#    """Main loop that spins up services related to the application"""
+#    ### ------------------------------
+#    # configure and run uvicorn server
+#    config = uvicorn.Config("main:app", port=8000, log_level="info")
+#    server = uvicorn.Server(config)
+#    await server.serve()
 
 
-if __name__ == "__main__":
-    asyncio.run(main_pool())
+#if __name__ == "__main__":
+#    asyncio.run(main_pool())
