@@ -5,7 +5,7 @@ The application will start as a basic api that will store and retreive informati
 
 ## File Structure
 
-.
+
 ├── app                  # "app" is a Python package
 │   ├── __init__.py      # this file makes "app" a "Python package"
 │   ├── main.py          # "main" module, e.g. import app.main
