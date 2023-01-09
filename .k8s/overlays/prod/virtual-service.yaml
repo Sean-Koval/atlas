@@ -1,0 +1,26 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: mlapi
+  namespace: sean-koval
+spec:
+  hosts:
+    - sean-koval.mids255.com
+  gateways:
+    - istio-ingress/sean-koval-gateway
+  http:
+    - match:
+        - uri:
+            exact: /predict
+        - uri:
+            prefix: /health
+        - uri:
+            prefix: /docs
+        - uri:
+            prefix: /openapi.json
+      route:
+        - destination:
+            host: mlapi # service-prediction.sean-koval.svc.cluster.local or lab4
+            port:
+              number: 80 # 8000

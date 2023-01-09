@@ -1,0 +1,14 @@
+---
+namespace: sean-koval
+resources:
+  - config-map.yaml
+  - persistent-volume.yaml
+  - postgres-pv-pvc.yaml
+  - postgres-config.yaml
+  - deployment-postgres.yaml
+  - deployment-mlapi.yaml
+  - deployment-redis.yaml
+  - service-mlapi.yaml
+  - service-redis.yaml
+  - service-postgres.yaml
+

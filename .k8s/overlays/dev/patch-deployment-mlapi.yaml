@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlapi
+  namespace: sean-koval
+spec:
+  template:
+    spec:
+      containers:
+        - name: mlapi
+          image: atlas:7a6ddf9  # mlapi:b413564 #0c2f66a  #fc88e7b  #e28e252 # not namespace :e28e252
+          env:
+            - name: "REDIS_URL"
+              value: redis.sean-koval.svc.cluster.local #dev-redis-srv.dev.svc.cluster.local
+          resources:
+            requests:
+              cpu: 500m
+              memory: 700Mi
+            limits:
+              cpu: 700m
+              memory: 1Gi
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80 # 8000
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80 # 8000
+            initialDelaySeconds: 25
+            periodSeconds: 30

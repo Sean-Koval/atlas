@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlapi
+  namespace: sean-koval # sean-koval
+  labels:
+    app: mlapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlapi
+  template:
+    metadata:
+      labels:
+        app: mlapi
+    spec:
+      containers:
+        - name: mlapi
+          image: atlas:7a6ddf9     # SET TO MOST UP TO DATE IMAGE
+          #env:
+          #- name: "REDIS_URL"
+          #  value: redis.sean-koval.svc.cluster.local 
+          resources:
+            requests:
+              cpu: 500m
+              memory: 700Mi
+            limits:
+              cpu: 700m
+              memory: 1Gi
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80
+            initialDelaySeconds: 25
+            periodSeconds: 30
+      initContainers:
+        - name: init-verify-redis-service-dns
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until nc -vz redis 6379; do echo 'waiting for redis service from DNS'; sleep 2; done",
+            ]
+        - name: init-verify-redis-ready
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until (printf 'PING\r\n';) | nc redis 6379; do echo 'waiting for redis to PONG'; sleep 1; done",
+            ]
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mlapi
+  namespace: sean-koval
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mlapi
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50

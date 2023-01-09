@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: sean-koval # this was added
+spec:
+  serviceName: redis
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      tier: backend
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "standard"
+        resources:
+          requests:
+            storage: 500Mi
+  template:
+    metadata:
+      labels:
+        app: redis
+        tier: backend
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.0
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+          command: ["redis-server"]
+          args: ["/etc/redis.conf"]
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: redis-config
+              mountPath: /etc/
+              subPath: redis.conf
+          ports:
+            - containerPort: 6379
+      volumes:
+        - name: redis-config
+          emptyDir: {}
+        - name: redis-config-map
+          configMap:
+            name: redis
+      initContainers:
+        - name: config
+          image: redis:6.2
+          command: ["bash", "-c"]
+          args:
+            - |
+              set -ex
+              [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+              ordinal=${BASH_REMATCH[1]}
+              # Copy appropriate conf.d files from config-map to emptyDir.
+              if [[ $ordinal -eq 0 ]]; then
+                cp /mnt/config-map/master.conf /etc/redis.conf
+              else
+                cp /mnt/config-map/slave.conf /etc/redis.conf
+              fi
+          volumeMounts:
+            - name: redis-config
+              mountPath: /etc
+              subPath: redis.conf
+            - name: redis-config-map
+              mountPath: /mnt/config-map/

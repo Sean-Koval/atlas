@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlapi # prediction-api
+  namespace: sean-koval
+spec:
+  template:
+    spec:
+      containers:
+        - name: mlapi 
+          image: w255mids.azurecr.io/sean-koval/atlas:7a6ddf9   # mlapi image
+          env:
+            - name: "REDIS_URL" # ORIG NOT KEY VALUE IN ENV
+              value: redis.sean-koval.svc.cluster.local 
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80 # 8000
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80 # 8000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 80 # 8000
+            initialDelaySeconds: 25
+            periodSeconds: 30
