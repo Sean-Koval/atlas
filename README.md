@@ -4,8 +4,7 @@ The application will start as a basic api that will store and retreive informati
 
 
 ## File Structure
-
-
+```
 ├── app                  # "app" is a Python package
 │   ├── __init__.py      # this file makes "app" a "Python package"
 │   ├── main.py          # "main" module, e.g. import app.main
@@ -20,6 +19,6 @@ The application will start as a basic api that will store and retreive informati
 │   └── internal         # "internal" is a "Python subpackage"
 │       ├── __init__.py  # makes "internal" a "Python subpackage"
 │       └── admin.py     # "admin" submodule, e.g. import app.internal.admin
-
+```
 
 This project will also use Docker to containerize the application and Kubernetes to deploy the application
