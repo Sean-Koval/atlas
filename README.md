@@ -1,17 +1,10 @@
-## Atlas
+
+<p align="center"> <img src="./images/logo.png" width=200 height=75> </p> <br>
 
 Welcome to the Atlas API! This API provides alternative data to venture capital firms to help them make better investing decisions. We collect, quantify, and analyze metrics and patterns using machine learning to assist in the sourcing, analysis, and management of investments.
 
-
-
-h1 align="center"> Atlas </h1> <br>
-
 <p align="center">
 
-    The application will start as a basic api that will store and retreive information about a user.
-
-
-    The application is deployed via kubernetes and utilizes redis and postgresql.
 </p>
 
 
@@ -26,11 +19,10 @@ h1 align="center"> Atlas </h1> <br>
 ## **Technologies**
 ---
 Project is created with:
-* Azure
-* Istio
 * Kubernetes
 * Docker >= 20.15.17
 * Redis
+* Postgres
 * Python >= 3.10
 * Poetry >= 1.2.0
 * Fast-api
@@ -44,7 +36,7 @@ The application can be run using the command line or deployed using a Docker con
 * Clone the repository
 
 ```
-$ git clone git@github.com:UCB-W255/fall22-Sean-Koval.git
+git clone git@github.com:Sean-Koval/atlas.git
 ```
 
 ### **Build and Deploy with Minikube**
@@ -73,7 +65,7 @@ $ ./runs.h -c
 ```
 ---
 
-## **Build and Deploy with AKS**
+## **Build and Deploy to AKS**
 Running these commands will deploy the application (including redis and all necessary deployments/services) to AKS within the sean-koval namespace (and cluster).
 
 
