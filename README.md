@@ -1,5 +1,5 @@
 
-<p align="center"> <img src="./images/logo.png" width=200 height=75> </p> <br>
+<p align="center"> <img src="./assets/logo.svg" width=200 height=75> </p> <br>
 
 Welcome to the Atlas API! This API provides alternative data to venture capital firms to help them make better investing decisions. We collect, quantify, and analyze metrics and patterns using machine learning to assist in the sourcing, analysis, and management of investments.
 
