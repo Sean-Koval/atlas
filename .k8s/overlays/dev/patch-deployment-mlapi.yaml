@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: mlapi
-          image: project:78bd6f0 # mlapi:b413564 #0c2f66a  #fc88e7b  #e28e252 # not namespace :e28e252
+          image: atlas:7a6ddf9  # mlapi:b413564 #0c2f66a  #fc88e7b  #e28e252 # not namespace :e28e252
           env:
             - name: "REDIS_URL"
               value: redis.sean-koval.svc.cluster.local #dev-redis-srv.dev.svc.cluster.local

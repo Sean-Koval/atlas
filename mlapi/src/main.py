@@ -10,7 +10,7 @@ import aiohttp
 import aioredis
 import asyncpg
 # Set up PostgreSQL connection
-import psycopg2
+#import psycopg2
 import pypeln
 import requests
 import uvicorn
@@ -26,8 +26,8 @@ from sqlalchemy.orm import sessionmaker
 from fastapi import Request, Response, APIRouter, HTTPException
 
 from config import settings
-from mlapi.src.models.vc_models import *
-from mlapi.src.routers import profile, radar, symbio
+from src.models.vc_models import *
+from src.routers import profile, radar, symbio
 
 
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
@@ -38,11 +38,11 @@ SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 # create fast-api
 app = FastAPI(title="atlas", description="Venture Capital + Startup: Research Tool")
 
-# postgres connection
-conn = psycopg2.connect(SQLALCHEMY_DATABASE_URL)
-cur = conn.cursor()
+# # postgres connection
+# conn = psycopg2.connect(SQLALCHEMY_DATABASE_URL)
+# cur = conn.cursor()
 
-cur.execute("ROLLBACK")
+# cur.execute("ROLLBACK")
 
 
 # app.add_middleware(DBSessionMiddleware, db_url=os.getenv["DATABASE_URL"])
@@ -57,42 +57,42 @@ cur.execute("ROLLBACK")
 ### ---- STORE COMPANY DATA IN POSTGRES ----- (FOR A USER)
 
 # Create the startups table if it does not exist
-with conn, conn.cursor() as cursor:
-    try:
-        cursor.execute(
-            """
-            CREATE TABLE startups (
-                id serial PRIMARY KEY,
-                name varchar(255) NOT NULL,
-                industry varchar(255) NOT NULL,
-                location varchar(255) NOT NULL,
-                website varchar(255) NOT NULL,
-                funding_stage varchar(255) NOT NULL,
-                funding_amount integer NOT NULL,
-                pitch text NOT NULL
-            )
-            """
-        )
-    except psycopg2.errors.DuplicateTable:
-        pass
+# with conn, conn.cursor() as cursor:
+#     try:
+#         cursor.execute(
+#             """
+#             CREATE TABLE startups (
+#                 id serial PRIMARY KEY,
+#                 name varchar(255) NOT NULL,
+#                 industry varchar(255) NOT NULL,
+#                 location varchar(255) NOT NULL,
+#                 website varchar(255) NOT NULL,
+#                 funding_stage varchar(255) NOT NULL,
+#                 funding_amount integer NOT NULL,
+#                 pitch text NOT NULL
+#             )
+#             """
+#         )
+#     except psycopg2.errors.DuplicateTable:
+#         pass
 
-    try:
-        cursor.execute(
-            """
-            CREATE TABLE venture_capital_firms (
-                id serial PRIMARY KEY,
-                name varchar(255) NOT NULL,
-                location varchar(255) NOT NULL,
-                website varchar(255) NOT NULL,
-                investment_focus varchar(255) NOT NULL,
-                aum varchar(255) NOT NULL
-            )
-            """
-        )
+#     try:
+#         cursor.execute(
+#             """
+#             CREATE TABLE venture_capital_firms (
+#                 id serial PRIMARY KEY,
+#                 name varchar(255) NOT NULL,
+#                 location varchar(255) NOT NULL,
+#                 website varchar(255) NOT NULL,
+#                 investment_focus varchar(255) NOT NULL,
+#                 aum varchar(255) NOT NULL
+#             )
+#             """
+#         )
 
-    except psycopg2.errors.DuplicateTable:
-        # Table already exists, do nothing
-        pass
+#     except psycopg2.errors.DuplicateTable:
+#         # Table already exists, do nothing
+#         pass
 
 
 @app.middleware("http")
@@ -103,6 +103,10 @@ async def add_process_time_header(request, call_next):
     response.headers["X-Process-Time"] = str(f"{process_time:0.4f} sec")
     return response
 
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
 
 # route endpoints
 app.include_router(profile.router, prefix="/users", tags=["users"])

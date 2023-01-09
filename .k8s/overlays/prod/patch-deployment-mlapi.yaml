@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: mlapi 
-          image: w255mids.azurecr.io/sean-koval/project:b413564  # mlapi image
+          image: w255mids.azurecr.io/sean-koval/atlas:7a6ddf9   # mlapi image
           env:
             - name: "REDIS_URL" # ORIG NOT KEY VALUE IN ENV
               value: redis.sean-koval.svc.cluster.local 

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: mlapi
-          image: project:b413564     # SET TO MOST UP TO DATE IMAGE
+          image: atlas:7a6ddf9     # SET TO MOST UP TO DATE IMAGE
           #env:
           #- name: "REDIS_URL"
           #  value: redis.sean-koval.svc.cluster.local 

@@ -13,12 +13,15 @@ ENV POETRY_HOME="/opt/poetry" \
 # add poetry to the path
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
+RUN apt-get clean
+
 # install poetry and update packages
 RUN apt-get update \
     && apt-get -y install --no-install-recommends \ 
         curl \
         build-essential \
         libffi-dev \
+#        libpq-dev gcc \
     #&& apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && pip install "poetry==${POETRY_VER}" --ignore-installed
@@ -39,12 +42,22 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PATH="/app/venv/bin:$PATH"
 
-RUN apt-get update && apt-get install -y curl
+
+ENV PYTHONPATH="$PYTHONPATH:/app"
+
+# libpq-dev for psycopg2
+RUN apt-get update \
+    && apt-get install -y curl
+#        libffi-dev \
+#        libpq-dev gcc
 
 # copy the venv folder from builder image 
 COPY --from=builder /app/venv /app/venv/
 WORKDIR /app
 COPY ./ ./
+
+ENV PYTHONPATH="$PYTHONPATH:/app"
+
 #HEALTHCHECK --interval=5s --timeout=3s \
 #  CMD curl -f http://localhost/health || exit 1
 # deploy api

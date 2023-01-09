@@ -1,1 +1,1 @@
-from mlapi.src.models.vc_models import *
+from src.models.vc_models import *

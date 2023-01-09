@@ -8,21 +8,24 @@ from typing import Any, List
 import aiohttp
 import aioredis
 import asyncpg
+
 # Set up PostgreSQL connectio
-import psycopg2
+# import psycopg2
 import pypeln
 import requests
 from dotenv import load_dotenv
 from fastapi import APIRouter, FastAPI
 from fastapi_sqlalchemy import DBSessionMiddleware  # middleware helper
-from fastapi_sqlalchemy import \
-    db  # an object to provide global access to a database session
+from fastapi_sqlalchemy import (
+    db,
+)  # an object to provide global access to a database session
 from pydantic import BaseModel
+
 # from aioredis import create_pool
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from mlapi.src.models.vc_models import KeywordInput, Project, SearchResult
+from src.models.vc_models import KeywordInput, Project, SearchResult
 
 router = APIRouter()
 

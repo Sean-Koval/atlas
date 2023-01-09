@@ -1,3 +1,3 @@
-from mlapi.src.routers.profile import *
-from mlapi.src.routers.radar import *
-from mlapi.src.routers.symbio import *
+from src.routers.profile import *
+from src.routers.radar import *
+from src.routers.symbio import *

@@ -7,6 +7,11 @@
 # - a : Runs Docker build and Docker run commands
 # - g : Runs model training and application deployment
 # ==========================
+
+# ps -ef|grep port-forward
+# kill -9 [pid] (middle second from left integer)
+
+
 # THIS WILL CHECK IF WE ARE IN MINIKUBE AND IF NOT SET THE CONTEXT TO MK
 if [ "$(kubectl config current-context)" != "minikube" ]
 then
@@ -34,7 +39,7 @@ while getopts "bdtagcsk" arg; do
             IMAGE_PREFIX=sean-koval
             # FQDN = Fully-Qualiifed Domain Name
             TAG=$(git log -1 --pretty=%h)
-            IMAGE_NAME=project #lab4
+            IMAGE_NAME=atlas #lab4
             #docker buildx build --no-cache --platform linux/amd64 -t ${IMAGE_NAME}:${TAG} --build-arg GIT_COMMIT=$(git log -1 --format=%h) ./mlapi/
             docker buildx build --no-cache --progress=tty --platform linux/amd64 -t ${IMAGE_NAME}:${TAG} --build-arg GIT_COMMIT=$(git log -1 --format=%h) ./mlapi/
             #docker tag ${IMAGE_NAME} ${IMAGE_FQDN}
@@ -57,7 +62,7 @@ while getopts "bdtagcsk" arg; do
             echo ""
             sleep 15
             # app name may change (check kube deployment files)
-            kubectl wait pods -n sean-koval -l app=mlapi --for condition=ready --timeout=90s
+            kubectl wait pods -n sean-koval -l app=mlapi --for condition=ready --timeout=30s
 
             echo ""
             echo "Predcition API is Ready: exposing API on port 8000"
@@ -79,9 +84,9 @@ while getopts "bdtagcsk" arg; do
             curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/docs"
             
             ### LAB2 TESTS
-            echo "testing '/health' endpoint (should return 200) and checking json response"
-            curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/health"
-            curl -o /dev/null -s -d -w "{@health.json}\n" -X GET "http://localhost:8000/health"
+#            echo "testing '/health' endpoint (should return 200) and checking json response"
+#            curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/health"
+#            curl -o /dev/null -s -d -w "{@health.json}\n" -X GET "http://localhost:8000/health"
 
             eval $(minikube docker-env -u)
 

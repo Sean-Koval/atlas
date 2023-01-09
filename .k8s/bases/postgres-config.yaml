@@ -1,0 +1,12 @@
+# --- set DB env variables --- #
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: sean-koval
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: atlas_db
+  POSTGRES_USER: postgres
+  #POSTGRES_PASSWORD:
