@@ -110,11 +110,3 @@ This will run all of the tests and produce a verbose output in the terminal.
 
 
 ---
-## **Endpoints**
-
-Our API has a number of endpoints that you can use to access different types of data. These include:
-```
-/metrics: This endpoint allows you to retrieve various metrics about companies, such as revenue, growth rate, and customer satisfaction.
-/patterns: This endpoint allows you to retrieve patterns and trends in data, such as spending patterns or usage trends.
-/investments: This endpoint allows you to manage your investments, including sourcing new investment opportunities and tracking the performance of your portfolio.
-```
